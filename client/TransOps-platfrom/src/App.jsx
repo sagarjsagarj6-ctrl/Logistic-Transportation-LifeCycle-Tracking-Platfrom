@@ -1,18 +1,26 @@
 import { useState } from 'react'
-
-import NavBar from "./components/NavBar";
+import Register from "./components/Register";
+import Login from "./components/Login"
+import Navbar from "./components/NavBar";
 import Hero from "./components/Hero";
 import Feature from "./components/Feature";
-
 import './App.css'
 
 function App() {
+  const[view,setView]=useState('home');
   
   return (
     <>
-    <NavBar />
+    <Navbar setView={setView}/>
+    {view==='home'&&(
+    <>
     <Hero/>
     <Feature/>
+    </>
+  )}
+
+  {view ==='login' && <Login/>}
+  {view==='register'&&<Register/>}
    </>
 
             )
