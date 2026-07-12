@@ -21,14 +21,17 @@ export default function DashboardLayout({ children, userRole, activeTab, setActi
           <p className="text-gray-400 text-sm uppercase">Menu</p>
           <button 
             onClick={() => { setActiveTab('overview'); setIsOpen(false); }} 
-            className={`block w-full text-left ${activeTab === 'overview' ? 'text-blue-400' : 'hover:text-blue-400'}`}
-          >
+            className={`block w-full text-left ${activeTab === 'overview' ? 'text-blue-400' : 'hover:text-blue-400'}`}>
             Overview
           </button>
           <button 
+            onClick={() => { setActiveTab('analytics'); setIsOpen(false); }} 
+            className={`block w-full text-left ${activeTab === 'analytics' ? 'text-blue-400' : 'hover:text-blue-400'}`}>
+            Analytics
+          </button>
+          <button 
             onClick={() => { setActiveTab('settings'); setIsOpen(false); }} 
-            className={`block w-full text-left ${activeTab === 'settings' ? 'text-blue-400' : 'hover:text-blue-400'}`}
-          >
+            className={`block w-full text-left ${activeTab === 'settings' ? 'text-blue-400' : 'hover:text-blue-400'}`}>
             Settings
           </button>
         </nav>
