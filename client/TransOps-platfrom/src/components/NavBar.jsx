@@ -36,6 +36,10 @@ function Navbar({ setView }) {
             Register
           </button>
         </div>
+       
+       
+
+
       </div>
     </nav>
   );

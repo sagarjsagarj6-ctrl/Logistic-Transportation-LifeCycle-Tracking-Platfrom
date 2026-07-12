@@ -4,6 +4,8 @@ import Login from "./components/Login"
 import Navbar from "./components/NavBar";
 import Hero from "./components/Hero";
 import Feature from "./components/Feature";
+import Admindash from './components/AdminDashboard';
+import DriverDash from './components/DriverDashboard';
 import './App.css'
 
 function App() {
@@ -11,16 +13,12 @@ function App() {
   
   return (
     <>
-    <Navbar setView={setView}/>
-    {view==='home'&&(
-    <>
-    <Hero/>
-    <Feature/>
-    </>
-  )}
-
-  {view ==='login' && <Login/>}
-  {view==='register'&&<Register/>}
+    <Navbar setView={setView} />
+      {view === 'home' && <><Hero /><Feature /></>}
+      {view === 'login' && <Login setView={setView} />}
+      {view === 'register' && <Register setView={setView} />}
+      {view === 'admindashboard'&&<Admindash />}
+      {view === 'DriverDash' && <DriverDash />}
    </>
 
             )

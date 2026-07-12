@@ -1,105 +1,58 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 function Register({ setView }) {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ name: '', email: '', password: '', role:'Driver'});
 
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Register Data:", formData);
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert("Registered successfully!");
+        setView('login');
+      } else {
+        alert(data.error || "Something went wrong");
+      }
+    } catch (err) {
+      console.error("Error:", err);
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-8">
-        <h2 className="text-3xl font-bold text-center text-blue-600">
-          Create Account
-        </h2>
+    <form onSubmit={handleSubmit} className="p-8 max-w-md mx-auto">
+      <h2 className="text-2xl font-bold mb-4">Register</h2>
+      <input type="text" placeholder="Name" className="w-full p-2 mb-3 border rounded" onChange={(e) => setFormData({...formData, name: e.target.value})} required />
+      <input type="email" placeholder="Email" className="w-full p-2 mb-3 border rounded" onChange={(e) => setFormData({...formData, email: e.target.value})} required />
+      <input type="password" placeholder="Password" className="w-full p-2 mb-3 border rounded" onChange={(e) => setFormData({...formData, password: e.target.value})} required />
+      <div className="mb-3">
+  <label className="block mb-2 font-medium">
+    Select Role
+  </label>
 
-        <p className="text-center text-gray-500 mt-2">
-          Register to access TransOps
-        </p>
-
-        <form onSubmit={handleSubmit} className="mt-8 space-y-5">
-
-          <div>
-            <label className="block mb-2 font-medium">
-              Full Name
-            </label>
-
-            <input
-              type="text"
-              name="fullName"
-              placeholder="Enter your full name"
-              value={formData.fullName}
-              onChange={handleChange}
-              className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block mb-2 font-medium">
-              Email
-            </label>
-
-            <input
-              type="email"
-              name="email"
-              placeholder="Enter your email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block mb-2 font-medium">
-              Password
-            </label>
-
-            <input
-              type="password"
-              name="password"
-              placeholder="Create a password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
-              required
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
-          >
-            Register
-          </button>
-
-        </form>
-
-        <p className="text-center mt-6 text-gray-600">
-          Already have an account?{" "}
-          <button
-            onClick={()=>setView('login')}
-            className="text-blue-600 hover:underline font-semibold"
-          >
-            Login
-          </button>
-        </p>
-      </div>
-    </div>
+  <select
+    className="w-full p-2 border rounded"
+    value={formData.role}
+    onChange={(e) =>
+      setFormData({
+        ...formData,
+        role: e.target.value,
+      })
+    }
+  >
+    <option value="Driver">Driver</option>
+    <option value="Admin">Admin</option>
+  </select>
+</div>
+      <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded">Register</button>
+      <p className="mt-4 text-center">Already have an account? <button type="button" onClick={() => setView('login')} className="text-blue-600">Login</button></p>
+     
+    </form>
   );
 }
 
